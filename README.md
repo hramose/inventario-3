@@ -1,0 +1,4 @@
+inventario
+==========
+
+Otro proyecto escolar...
