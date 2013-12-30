@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -37,8 +38,10 @@ public class Evento implements Serializable {
     @Column
     private String observaciones;
     @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @Column
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date fechaRealizado;
 
     public Evento() {

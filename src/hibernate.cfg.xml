@@ -43,5 +43,6 @@
     <mapping class="com.inventario.modelo.Area" />
     <mapping class="com.inventario.modelo.Empleado" />
     <mapping class="com.inventario.modelo.Usuario" />
+    <mapping class="com.inventario.modelo.ItemFecha" />
   </session-factory>
 </hibernate-configuration>
