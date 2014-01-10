@@ -15,7 +15,7 @@ public class VistaError extends javax.swing.JPanel implements Vista {
     }
 
     @Override
-    public void inicializar(Aplicacion app) throws InvException {
+    public void inicializar(Aplicacion app) throws InventarioException {
         
     }
 
@@ -30,7 +30,7 @@ public class VistaError extends javax.swing.JPanel implements Vista {
     }
 
     @Override
-    public void activar() throws InvException {
+    public void activar() throws InventarioException {
         
     }
 

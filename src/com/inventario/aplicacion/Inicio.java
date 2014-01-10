@@ -4,6 +4,7 @@ import com.inventario.aplicacion.gui.Principal;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Nobody
+ * @author Enrique
  */
 public class Inicio {
     
@@ -58,6 +59,7 @@ public class Inicio {
             cs.getTransaction().commit();
         } catch (HibernateException hex) {
             log.error(hex.getMessage(), hex);
+            new AppMensaje(hex).mostrar(new JFrame());
             System.exit(1);
         }
 

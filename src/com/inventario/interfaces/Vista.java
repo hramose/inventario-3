@@ -1,6 +1,6 @@
 package com.inventario.interfaces;
 
-import com.inventario.error.InvException;
+import com.inventario.error.InventarioException;
 import javax.swing.JComponent;
 
 /**
@@ -14,15 +14,15 @@ public interface Vista {
      * configura la pantalla para mostrarse por primera vez.
      *
      * @param app La aplicación principal.
-     * @throws InvException Si no puede configurarse la pantalla.
+     * @throws InventarioException Si no puede configurarse la pantalla.
      */
-    public void inicializar(Aplicacion app) throws InvException;
+    public void inicializar(Aplicacion app) throws InventarioException;
 
     public JComponent getVista();
 
     public String getTitulo();
 
-    public void activar() throws InvException;
+    public void activar() throws InventarioException;
 
     public boolean ocultar();
 }

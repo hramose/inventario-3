@@ -1,9 +1,13 @@
 package com.inventario.interfaces;
 
+import org.hibernate.SessionFactory;
+
 /**
  *
- * @author José Bernardo Goméz-Andrade
+ * @author Zulma
  */
 public interface Aplicacion {
 
+    public SessionFactory getSessionFactory();
+    
 }
