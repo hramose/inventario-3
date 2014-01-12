@@ -59,6 +59,7 @@ public class ModeloItems<T> extends AbstractListModel<T> {
         if (saver.puedeModificar() && pos >= 0 && pos < lista.size()) {
             if (saver.modificar(item)) {
                 lista.set(pos, item);
+                fireContentsChanged(this, pos, pos);
                 return pos;
             } else {
                 throw new InventarioException("No se pudo modificar el registro");

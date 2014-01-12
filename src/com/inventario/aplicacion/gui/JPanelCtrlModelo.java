@@ -5,6 +5,8 @@ import com.inventario.bd.NavegadorDatos;
 import com.inventario.error.InventarioException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -12,6 +14,7 @@ import java.awt.event.ActionListener;
  */
 public class JPanelCtrlModelo extends javax.swing.JPanel implements ActionListener {
 
+    private final static Logger log = LoggerFactory.getLogger(JPanelCtrlModelo.class);
     private final NavegadorDatos nav;
 
     public JPanelCtrlModelo(NavegadorDatos nav) {
@@ -46,20 +49,35 @@ public class JPanelCtrlModelo extends javax.swing.JPanel implements ActionListen
         jbBorrar = new javax.swing.JButton();
         jbGuardar = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(400, 40));
-        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 2));
-
         jbNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/inventario/iconos/add_page.png"))); // NOI18N
-        jbNuevo.setPreferredSize(new java.awt.Dimension(40, 36));
-        add(jbNuevo);
+        jbNuevo.setToolTipText("Nuevo registro");
+        jbNuevo.setPreferredSize(new java.awt.Dimension(40, 40));
 
         jbBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/inventario/iconos/delete_page.png"))); // NOI18N
-        jbBorrar.setPreferredSize(new java.awt.Dimension(40, 36));
-        add(jbBorrar);
+        jbBorrar.setToolTipText("Eliminar registro");
+        jbBorrar.setPreferredSize(new java.awt.Dimension(40, 40));
 
         jbGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/inventario/iconos/save.png"))); // NOI18N
-        jbGuardar.setPreferredSize(new java.awt.Dimension(40, 36));
-        add(jbGuardar);
+        jbGuardar.setToolTipText("Guardar cambios");
+        jbGuardar.setPreferredSize(new java.awt.Dimension(40, 40));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jbBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 

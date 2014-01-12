@@ -2,6 +2,7 @@ package com.inventario.aplicacion.gui;
 
 import com.inventario.bd.NavegadorDatos;
 import com.inventario.listener.EstadoListener;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JLabel;
 
@@ -14,6 +15,8 @@ public class JLabelEstado extends JLabel implements EstadoListener {
     public JLabelEstado(NavegadorDatos nav) {
         super();
         setFont(getFont().deriveFont(Font.BOLD));
+        setPreferredSize(new Dimension(160, 40));
+        // setBorder(BorderFactory.createLineBorder(Color.red));
         nav.addEstadoListener(this);
     }
 

@@ -12,7 +12,7 @@ public class Saver<T> {
 
     private Transaccion registrar, modificar, borrar;
     
-    private Saver(Aplicacion app) {
+    public Saver(Aplicacion app) {
         registrar = new Transaccion(app.getSessionFactory()) {
             
             @Override

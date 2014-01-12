@@ -83,7 +83,7 @@ public abstract class CatalogoPanel<T> extends javax.swing.JPanel implements Vis
     public void actualizarPosicion(int pos, int total) {
         if (pos <= 0 && pos < total) {
             jlItems.getSelectionModel().setSelectionInterval(pos, pos);
-            jlItems.ensureIndexIsVisible(pos);
+            // jlItems.ensureIndexIsVisible(pos);
         } else {
             jlItems.getSelectionModel().clearSelection();
         }
@@ -108,7 +108,7 @@ public abstract class CatalogoPanel<T> extends javax.swing.JPanel implements Vis
         @Override
         public void valueChanged(ListSelectionEvent e) {
             if (!e.getValueIsAdjusting()) {
-                if (nav.isAjustando()) {
+                if (!nav.isAjustando()) {
                     int i = jlItems.getSelectedIndex();
                     if (i >= 0) {
                         try {
@@ -132,7 +132,6 @@ public abstract class CatalogoPanel<T> extends javax.swing.JPanel implements Vis
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpFiltro = new javax.swing.JPanel();
         jspItems = new javax.swing.JScrollPane();
         jlItems = new javax.swing.JList();
         jpContenido = new javax.swing.JPanel();
@@ -141,20 +140,7 @@ public abstract class CatalogoPanel<T> extends javax.swing.JPanel implements Vis
 
         setLayout(new java.awt.BorderLayout());
 
-        jpFiltro.setPreferredSize(new java.awt.Dimension(400, 10));
-
-        javax.swing.GroupLayout jpFiltroLayout = new javax.swing.GroupLayout(jpFiltro);
-        jpFiltro.setLayout(jpFiltroLayout);
-        jpFiltroLayout.setHorizontalGroup(
-            jpFiltroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 871, Short.MAX_VALUE)
-        );
-        jpFiltroLayout.setVerticalGroup(
-            jpFiltroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-
-        add(jpFiltro, java.awt.BorderLayout.PAGE_START);
+        jspItems.setPreferredSize(new java.awt.Dimension(220, 131));
 
         jlItems.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jspItems.setViewportView(jlItems);
@@ -176,7 +162,6 @@ public abstract class CatalogoPanel<T> extends javax.swing.JPanel implements Vis
     private javax.swing.JList jlItems;
     private javax.swing.JPanel jpContenido;
     private javax.swing.JPanel jpControles;
-    private javax.swing.JPanel jpFiltro;
     private javax.swing.JScrollPane jspEditor;
     private javax.swing.JScrollPane jspItems;
     // End of variables declaration//GEN-END:variables

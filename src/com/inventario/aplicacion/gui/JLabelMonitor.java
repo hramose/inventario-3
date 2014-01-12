@@ -2,6 +2,7 @@ package com.inventario.aplicacion.gui;
 
 import com.inventario.listener.MonitorListener;
 import com.inventario.listener.MonitorViewInterface;
+import java.awt.Dimension;
 import javax.swing.JLabel;
 
 /**
@@ -12,6 +13,8 @@ public class JLabelMonitor extends JLabel implements MonitorViewInterface {
 
     public JLabelMonitor(MonitorListener monitor) {
         super();
+        // setBorder(BorderFactory.createLineBorder(Color.blue));
+        setPreferredSize(new Dimension(40, 40));
         monitor.addView(this);
     }
 

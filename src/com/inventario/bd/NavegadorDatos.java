@@ -118,11 +118,11 @@ public class NavegadorDatos<T> {
 
     public boolean puedeMover() throws InventarioException {
         if (monitor.isDirty()) {
-            int res = DialogoUtil.confirmar(null, "Existen datos sin guardar", JOptionPane.YES_NO_CANCEL_OPTION);
+            int res = DialogoUtil.confirmar(null, "Existen datos sin guardar, ¿Desea descartar los cambios y continuar?", JOptionPane.YES_NO_CANCEL_OPTION);
             if (res == JOptionPane.YES_OPTION) {
                 return true;
             } else if (res == JOptionPane.NO_OPTION) {
-                monitor.setDirty(false);
+                monitor.setDirty(true);
                 return true;
             } else {
                 return false;
@@ -149,6 +149,7 @@ public class NavegadorDatos<T> {
 
     public void cargar() throws InventarioException {
         editor.actualizar();
+        modelo.cargar();
         indiceA(0);
     }
 
