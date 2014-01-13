@@ -13,10 +13,10 @@ public interface Aplicacion {
     
     public Usuario getUsuario();
     
-    public void setUsuario(Usuario usuario);
+    public void ingresar(Usuario usuario);
     
     public AccesoDatos getDatos(String clase);
     
-    public void ocuparPantallaCompleta();
+    public void mostrarTarea(String tarea);
     
 }

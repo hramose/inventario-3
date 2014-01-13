@@ -24,7 +24,7 @@ public class Inicio {
     private static final Map<String, String> CLAVES;
     
     static {
-        CLAVES = new HashMap<String, String>(3);
+        CLAVES = new HashMap<>(3);
         CLAVES.put("aplicacion.bd.url", "hibernate.connection.url");
         CLAVES.put("aplicacion.bd.usuario", "hibernate.connection.username");
         CLAVES.put("aplicacion.bd.contrasena", "hibernate.connection.password");

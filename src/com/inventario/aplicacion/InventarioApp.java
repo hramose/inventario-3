@@ -13,4 +13,5 @@ public class InventarioApp {
     
     public static final String LOGIN = "com.inventario.aplicacion.gui.Login";
     public static final String AREAS = "com.inventario.aplicacion.catalogos.Areas";
+    public static final String INICIO = "com.inventario.aplicacion.gui.Inicio";
 }

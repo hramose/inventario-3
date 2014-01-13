@@ -7,11 +7,12 @@ import com.inventario.error.InventarioException;
 import com.inventario.interfaces.Aplicacion;
 import com.inventario.interfaces.Vista;
 import com.inventario.modelo.Usuario;
+import java.awt.event.KeyEvent;
 import javax.swing.JComponent;
 
 /**
  *
- * @author José Bernardo Gómez-Andrade
+ * @author Enrique
  */
 public class Login extends javax.swing.JPanel implements Vista {
 
@@ -43,8 +44,7 @@ public class Login extends javax.swing.JPanel implements Vista {
 
     @Override
     public void activar() throws InventarioException {
-        // Nada que hacer
-        app.ocuparPantallaCompleta();
+        // Nada nuevo
     }
 
     @Override
@@ -72,6 +72,11 @@ public class Login extends javax.swing.JPanel implements Vista {
         jLabel1.setPreferredSize(new java.awt.Dimension(140, 28));
 
         jtfUsuario.setPreferredSize(new java.awt.Dimension(160, 26));
+        jtfUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfUsuarioKeyPressed(evt);
+            }
+        });
 
         jtfContrasena.setPreferredSize(new java.awt.Dimension(160, 26));
 
@@ -165,8 +170,7 @@ public class Login extends javax.swing.JPanel implements Vista {
             String contra = new String(jtfContrasena.getPassword());
             Usuario usr = dGeneral.getUsuario(usuario, contra);
             if (usr != null) {
-                app.setUsuario(usr);
-                
+                app.ingresar(usr);
             } else {
                 new AppMensaje("Usuario no encontrado").mostrar(this);
             }
@@ -174,6 +178,12 @@ public class Login extends javax.swing.JPanel implements Vista {
             new AppMensaje(ex).mostrar(this);
         }
     }//GEN-LAST:event_jbIngresarActionPerformed
+
+    private void jtfUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfUsuarioKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            new AppMensaje("Un enter! :" + jtfUsuario.getText()).mostrar(this);
+        }
+    }//GEN-LAST:event_jtfUsuarioKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

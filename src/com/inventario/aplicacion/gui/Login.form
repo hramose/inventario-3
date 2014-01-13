@@ -88,6 +88,9 @@
               <Dimension value="[160, 26]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfUsuarioKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="jtfContrasena">
           <Properties>

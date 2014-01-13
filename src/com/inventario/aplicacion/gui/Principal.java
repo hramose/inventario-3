@@ -45,6 +45,7 @@ public class Principal extends javax.swing.JFrame implements Aplicacion, ActionL
 
         // Ocultar el menu
         jmbMenu.setVisible(false);
+        jpEncabezado.setVisible(false);
 
         //
         jmiAreas.setActionCommand(InventarioApp.AREAS);
@@ -54,6 +55,7 @@ public class Principal extends javax.swing.JFrame implements Aplicacion, ActionL
         mostrarTarea(InventarioApp.LOGIN);
     }
 
+    @Override
     public final void mostrarTarea(String tarea) {
         if (vistaActual != null
                 && (!vistaActual.ocultar() || vistaActual.getClass().getCanonicalName().equals(tarea))) {
@@ -106,10 +108,12 @@ public class Principal extends javax.swing.JFrame implements Aplicacion, ActionL
     }
 
     @Override
-    public void ocuparPantallaCompleta() {
-        jmbMenu.setVisible(false);
-        jpEncabezado.setVisible(false);
-        this.validate();
+    public void ingresar(Usuario usuario) {
+        this.usuario = usuario;
+        jpEncabezado.setVisible(true);
+        
+        // Tarea inicial
+        mostrarTarea(InventarioApp.INICIO);
     }
 
     @Override
@@ -120,10 +124,6 @@ public class Principal extends javax.swing.JFrame implements Aplicacion, ActionL
     @Override
     public Usuario getUsuario() {
         return usuario; // Ok, usuario que ingreso a la aplicación
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     @Override
