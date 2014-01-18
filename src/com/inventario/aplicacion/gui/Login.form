@@ -32,7 +32,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jtfContrasena" min="-2" max="-2" attributes="0"/>
+                          <Component id="jpfContrasena" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -59,7 +59,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jtfContrasena" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jpfContrasena" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -88,11 +88,8 @@
               <Dimension value="[160, 26]"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfUsuarioKeyPressed"/>
-          </Events>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="jtfContrasena">
+        <Component class="javax.swing.JPasswordField" name="jpfContrasena">
           <Properties>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[160, 26]"/>

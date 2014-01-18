@@ -52,4 +52,10 @@ public class Programa implements Serializable{
         this.version = version;
     }
 
+	@Override
+	public String toString() {
+		return String.format("%s (%s)", nombre, version);
+	}
+	
+
 }

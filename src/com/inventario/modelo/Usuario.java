@@ -17,51 +17,56 @@ import javax.persistence.Table;
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 
-    private static final long serialVersionUID = 42L;
-    @Id
-    private String id;
-    @Column
-    private String usuario;
-    @Column
-    private String contrasena;
-    @OneToOne(optional = true)
-    @JoinColumn(name = "id_empleado")
-    @MapsId
-    private Empleado empleado;
+	private static final long serialVersionUID = 42L;
+	@Id
+	private String id;
+	@Column
+	private String usuario;
+	@Column
+	private String contrasena;
+	@OneToOne(optional = true)
+	@JoinColumn(name = "id_empleado")
+	@MapsId
+	private Empleado empleado;
 
-    public Usuario() {
-    }
+	public Usuario() {
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getUsuario() {
-        return usuario;
-    }
+	public String getUsuario() {
+		return usuario;
+	}
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 
-    public String getContrasena() {
-        return contrasena;
-    }
+	public String getContrasena() {
+		return contrasena;
+	}
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
 
-    public Empleado getEmpleado() {
-        return empleado;
-    }
+	public Empleado getEmpleado() {
+		return empleado;
+	}
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
-    }
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
+	}
+
+	@Override
+	public String toString() {
+		return usuario;
+	}
 
 }

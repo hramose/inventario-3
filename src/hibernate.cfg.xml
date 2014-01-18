@@ -43,6 +43,14 @@
     <mapping class="com.inventario.modelo.Area" />
     <mapping class="com.inventario.modelo.Empleado" />
     <mapping class="com.inventario.modelo.Usuario" />
-    <mapping class="com.inventario.modelo.ItemFecha" />
+    <mapping class="com.inventario.modelo.Programa" />
+    <mapping class="com.inventario.modelo.TipoEquipo" />
+    <mapping class="com.inventario.modelo.EquipoComputo" />
+    <mapping class="com.inventario.modelo.EquipoPrograma2" />
+    <!-- No funciona el mapeo directo, tendremos que usar un identificador
+    <mapping class="com.inventario.modelo.EquipoProgramaId" />
+    <mapping class="com.inventario.modelo.EquipoPrograma" /> -->
+    
+    
   </session-factory>
 </hibernate-configuration>

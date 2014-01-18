@@ -11,13 +11,13 @@ import com.inventario.modelo.Area;
  *
  * @author Zulma
  */
-public class Areas extends CatalogoPanel<Area> {
+public class AreaPanel extends CatalogoPanel<Area> {
 
-    private AreasEditor editor;
+    private AreaEditor editor;
 
     @Override
     protected void inicializar() {
-        editor = new AreasEditor(monitor);
+        editor = new AreaEditor(monitor);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Areas extends CatalogoPanel<Area> {
 
     @Override
     protected Saver<Area> getSaver() {
-        return new Saver<Area>(app);
+        return new Saver<>(app);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Areas extends CatalogoPanel<Area> {
 
     @Override
     public String getTitulo() {
-        return "Areas";
+        return "Áreas";
     }
 
 }

@@ -120,9 +120,9 @@ public class NavegadorDatos<T> {
         if (monitor.isDirty()) {
             int res = DialogoUtil.confirmar(null, "Existen datos sin guardar, ¿Desea descartar los cambios y continuar?", JOptionPane.YES_NO_CANCEL_OPTION);
             if (res == JOptionPane.YES_OPTION) {
+                monitor.setDirty(false);
                 return true;
             } else if (res == JOptionPane.NO_OPTION) {
-                monitor.setDirty(true);
                 return true;
             } else {
                 return false;

@@ -7,8 +7,12 @@ import com.inventario.error.InventarioException;
 import com.inventario.interfaces.Aplicacion;
 import com.inventario.interfaces.Vista;
 import com.inventario.modelo.Usuario;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,50 +20,85 @@ import javax.swing.JComponent;
  */
 public class Login extends javax.swing.JPanel implements Vista {
 
-    private Aplicacion app;
-    private DatosGeneral dGeneral;
+	private static final Logger log = LoggerFactory.getLogger(Login.class);
+	private Aplicacion app;
+	private DatosGeneral dGeneral;
 
-    public Login() {
-        initComponents();
+	public Login() {
+		initComponents();
 
-        jpLogin.setVisible(false);
-    }
+		jpLogin.setVisible(false);
+		KeyListener kl = new EnterKeyListener();
+		
+		jtfUsuario.addKeyListener(kl);
+		jpfContrasena.addKeyListener(kl);
+	}
 
-    @Override
-    public void inicializar(Aplicacion app) throws InventarioException {
-        this.app = app;
+	@Override
+	public void inicializar(Aplicacion app) throws InventarioException {
+		this.app = app;
 
-        dGeneral = (DatosGeneral) app.getDatos(InventarioApp.AD_GENERAL);
-    }
+		dGeneral = (DatosGeneral) app.getDatos(InventarioApp.AD_GENERAL);
+	}
 
-    @Override
-    public JComponent getVista() {
-        return this;
-    }
+	@Override
+	public JComponent getVista() {
+		return this;
+	}
 
-    @Override
-    public String getTitulo() {
-        return "Inicio";
-    }
+	@Override
+	public String getTitulo() {
+		return "Inicio";
+	}
 
-    @Override
-    public void activar() throws InventarioException {
-        // Nada nuevo
-    }
+	@Override
+	public void activar() throws InventarioException {
+		// Nada nuevo
+	}
 
-    @Override
-    public boolean ocultar() {
-        return app.getUsuario() != null;
-    }
+	@Override
+	public boolean ocultar() {
+		return app.getUsuario() != null;
+	}
 
-    @SuppressWarnings("unchecked")
+	private void ingresar() {
+		try {
+			String usuario = jtfUsuario.getText();
+			String contra = new String(jpfContrasena.getPassword());
+			if (usuario.trim().isEmpty() || contra.isEmpty()) {
+				log.info("Faltan datos");
+				return;
+			}
+			Usuario usr = dGeneral.getUsuario(usuario, contra);
+			if (usr != null) {
+				app.ingresar(usr);
+			} else {
+				new AppMensaje("Usuario no encontrado").mostrar(this);
+			}
+		} catch (InventarioException ex) {
+			new AppMensaje(ex).mostrar(this);
+		}
+	}
+
+	private class EnterKeyListener extends KeyAdapter {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == e.VK_ENTER) {
+				ingresar();
+			}
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jpLogin = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtfUsuario = new javax.swing.JTextField();
-        jtfContrasena = new javax.swing.JPasswordField();
+        jpfContrasena = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jbIngresar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
@@ -72,13 +111,8 @@ public class Login extends javax.swing.JPanel implements Vista {
         jLabel1.setPreferredSize(new java.awt.Dimension(140, 28));
 
         jtfUsuario.setPreferredSize(new java.awt.Dimension(160, 26));
-        jtfUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtfUsuarioKeyPressed(evt);
-            }
-        });
 
-        jtfContrasena.setPreferredSize(new java.awt.Dimension(160, 26));
+        jpfContrasena.setPreferredSize(new java.awt.Dimension(160, 26));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Contraseña");
@@ -110,7 +144,7 @@ public class Login extends javax.swing.JPanel implements Vista {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLoginLayout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jpfContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLoginLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -130,7 +164,7 @@ public class Login extends javax.swing.JPanel implements Vista {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpfContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -154,36 +188,20 @@ public class Login extends javax.swing.JPanel implements Vista {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoMouseClicked
-        if (!jpLogin.isVisible()) {
-            jpLogin.setVisible(true);
-            this.validate();
-        }
+		if (!jpLogin.isVisible()) {
+			jpLogin.setVisible(true);
+			jtfUsuario.requestFocus(); // Que el cursos se ubique en esta caja
+			this.validate();
+		}
     }//GEN-LAST:event_lblLogoMouseClicked
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
-        jpLogin.setVisible(false);
+		jpLogin.setVisible(false);
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarActionPerformed
-        try {
-            String usuario = jtfUsuario.getText();
-            String contra = new String(jtfContrasena.getPassword());
-            Usuario usr = dGeneral.getUsuario(usuario, contra);
-            if (usr != null) {
-                app.ingresar(usr);
-            } else {
-                new AppMensaje("Usuario no encontrado").mostrar(this);
-            }
-        } catch (InventarioException ex) {
-            new AppMensaje(ex).mostrar(this);
-        }
+		ingresar();
     }//GEN-LAST:event_jbIngresarActionPerformed
-
-    private void jtfUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfUsuarioKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            new AppMensaje("Un enter! :" + jtfUsuario.getText()).mostrar(this);
-        }
-    }//GEN-LAST:event_jtfUsuarioKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -192,7 +210,7 @@ public class Login extends javax.swing.JPanel implements Vista {
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbIngresar;
     private javax.swing.JPanel jpLogin;
-    private javax.swing.JPasswordField jtfContrasena;
+    private javax.swing.JPasswordField jpfContrasena;
     private javax.swing.JTextField jtfUsuario;
     private javax.swing.JLabel lblLogo;
     // End of variables declaration//GEN-END:variables

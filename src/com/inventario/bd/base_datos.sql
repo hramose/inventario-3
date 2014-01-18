@@ -59,10 +59,11 @@ create table programa (
 ) engine = InnoDB;
 
 create table equipo_programa (
+    id varchar(40) not null,
 	id_equipo varchar(40) not null,
 	id_programa varchar(40) not null,
 	vigencia datetime null,
-	constraint pk_equipo_programa primary key(id_equipo, id_programa),
+	constraint pk_equipo_programa primary key(id),
 	constraint fk_ep_e_equipo foreign key(id_equipo) references equipo_computo(id),
 	constraint fk_ep_p_programa foreign key(id_programa) references programa(id)
 ) engine = InnoDB;

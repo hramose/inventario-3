@@ -9,11 +9,11 @@ import com.inventario.modelo.Area;
  *
  * @author Zulma
  */
-public class AreasEditor extends Editor<Area>{
+public class AreaEditor extends Editor<Area>{
 
     private Area area;
     
-    public AreasEditor(MonitorListener monitor) {
+    public AreaEditor(MonitorListener monitor) {
         initComponents();
         
         monitor.listenTo(jtfNombre);

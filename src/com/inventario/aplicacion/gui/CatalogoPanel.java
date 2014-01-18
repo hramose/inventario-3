@@ -14,121 +14,129 @@ import com.inventario.listener.PosicionListener;
 import javax.swing.JComponent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Zulma
  * @param <T>
+ * @author Zulma
  */
 public abstract class CatalogoPanel<T> extends javax.swing.JPanel implements Vista, PosicionListener {
 
-    protected Aplicacion app;
-    protected MonitorListener monitor;
-    protected NavegadorDatos<T> nav;
+	private static final Logger log = LoggerFactory.getLogger(CatalogoPanel.class);
+	
+	protected Aplicacion app;
+	protected MonitorListener monitor;
+	protected NavegadorDatos<T> nav;
 
-    public CatalogoPanel() {
-        initComponents();
-    }
+	public CatalogoPanel() {
+		initComponents();
+	}
 
-    @Override
-    public void inicializar(Aplicacion app) throws InventarioException {
-        this.app = app;
-        this.monitor = new MonitorListener();
+	@Override
+	public void inicializar(Aplicacion app) throws InventarioException {
+		this.app = app;
+		this.monitor = new MonitorListener();
 
-        inicializar();
-    }
+		inicializar();
+	}
 
-    @Override
-    public JComponent getVista() {
-        return this;
-    }
+	@Override
+	public JComponent getVista() {
+		return this;
+	}
 
-    private void initNav() {
-        Editor<T> editor = getEditor();
-        jspEditor.setViewportView(editor.getComponente());
-        jspEditor.getVerticalScrollBar().setUnitIncrement(50);
+	private void initNav() {
+		Editor<T> editor = getEditor();
+		jspEditor.setViewportView(editor.getComponente());
+		jspEditor.getVerticalScrollBar().setUnitIncrement(50);
 
-        ModeloItems<T> modelo = new ModeloItems(getProvider(), getSaver());
-        nav = new NavegadorDatos<>(modelo, editor, monitor);
-        
-        jlItems.setModel(modelo);
-        jlItems.addListSelectionListener(new ItemSelectionListener(this));
-        nav.addPosicionListener(this);
-        
-        jpControles.add(new JLabelMonitor(monitor));
-        jpControles.add(new JLabelEstado(nav));
-        jpControles.add(new JLabelPosicion(nav));
-        jpControles.add(new JPanelCtrlModelo(nav));
-    }
+		ModeloItems<T> modelo = new ModeloItems(getProvider(), getSaver());
+		nav = new NavegadorDatos<>(modelo, editor, monitor);
 
-    @Override
-    public void activar() throws InventarioException {
-        if (nav == null) {
-            initNav();
-        }
-        nav.iniciar();
-    }
+		jlItems.setModel(modelo);
+		jlItems.addListSelectionListener(new ItemSelectionListener(this));
+		nav.addPosicionListener(this);
 
-    @Override
-    public boolean ocultar() {
-        try {
-            return nav.puedeCerrar();
-        } catch (InventarioException iex) {
-            new AppMensaje(iex).mostrar(this);
-            return false;
-        }
-    }
+		jpControles.add(new JLabelMonitor(monitor));
+		jpControles.add(new JLabelEstado(nav));
+		jpControles.add(new JLabelPosicion(nav));
+		jpControles.add(new JPanelCtrlModelo(nav));
+	}
 
-    @Override
-    public void actualizarPosicion(int pos, int total) {
-        if (pos <= 0 && pos < total) {
-            jlItems.getSelectionModel().setSelectionInterval(pos, pos);
-            // jlItems.ensureIndexIsVisible(pos);
-        } else {
-            jlItems.getSelectionModel().clearSelection();
-        }
-    }
+	@Override
+	public void activar() throws InventarioException {
+		if (nav == null) {
+			initNav();
+		}
+		nav.iniciar();
+	}
 
-    protected abstract void inicializar();
+	@Override
+	public boolean ocultar() {
+		try {
+			return nav.puedeCerrar();
+		} catch (InventarioException iex) {
+			new AppMensaje(iex).mostrar(this);
+			return false;
+		}
+	}
 
-    protected abstract Editor<T> getEditor();
+	@Override
+	public void actualizarPosicion(int pos, int total) {
+		log.info("Posicionando en {} de {}", pos, total);
+		if (pos >= 0 && pos < total) {
+			log.info("Seleccionando {}", pos);
+			// jlItems.getSelectionModel().setSelectionInterval(pos, pos);
+			jlItems.setSelectedIndex(pos);
+			// jlItems.ensureIndexIsVisible(pos);
+		} else {
+			log.info("Limpiando selección");
+			jlItems.getSelectionModel().clearSelection();
+		}
+	}
 
-    protected abstract Saver<T> getSaver();
+	protected abstract void inicializar();
 
-    protected abstract DataProvider<T> getProvider();
+	protected abstract Editor<T> getEditor();
 
-    private class ItemSelectionListener implements ListSelectionListener {
+	protected abstract Saver<T> getSaver();
 
-        private JComponent padre;
+	protected abstract DataProvider<T> getProvider();
 
-        public ItemSelectionListener(JComponent padre) {
-            this.padre = padre;
-        }
+	private class ItemSelectionListener implements ListSelectionListener {
 
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            if (!e.getValueIsAdjusting()) {
-                if (!nav.isAjustando()) {
-                    int i = jlItems.getSelectedIndex();
-                    if (i >= 0) {
-                        try {
-                            if (nav.puedeMover()) {
-                                nav.moverA(i);
-                            } else {
-                                nav.regresar();
-                            }
-                        } catch (InventarioException iex) {
-                            nav.regresar();
-                            new AppMensaje(iex).mostrar(padre);
-                        }
-                    }
-                }
-            }
-        }
+		private JComponent padre;
 
-    }
+		public ItemSelectionListener(JComponent padre) {
+			this.padre = padre;
+		}
 
-    @SuppressWarnings("unchecked")
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			if (!e.getValueIsAdjusting()) {
+				int i = jlItems.getSelectedIndex();
+				if (i >= 0) {
+					if (!nav.isAjustando()) {
+						try {
+							if (nav.puedeMover()) {
+								nav.moverA(i);
+							} else {
+								nav.regresar();
+							}
+						} catch (InventarioException iex) {
+							nav.regresar();
+							new AppMensaje(iex).mostrar(padre);
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
