@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 /**
  *
  * @author Enrique
+ * @param <T>
  */
 public abstract class Editor<T> extends JPanel {
 

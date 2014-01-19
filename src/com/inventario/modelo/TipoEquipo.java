@@ -18,7 +18,7 @@ public class TipoEquipo implements Serializable{
 
     private static final long serialVersionUID = 42L;
     @Id @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid" )
+    @GenericGenerator(name = "uuid", strategy = "uuid2" )
     private String id;
     @Column
     private String nombre;

@@ -24,7 +24,7 @@ public class Evento implements Serializable {
     private static final long serialVersionUID = 4L;
 
     @Id @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     @ManyToOne
     @JoinColumn(name = "id_equipo")

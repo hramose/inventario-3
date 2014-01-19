@@ -6,6 +6,7 @@ import java.util.List;
 /**
  *
  * @author Enrique
+ * @param <T>
  */
 public interface DataProvider<T> {
 
