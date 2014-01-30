@@ -2,6 +2,7 @@ package com.inventario.aplicacion;
 
 import com.inventario.gui.util.DialogKeyEventDistpatcher;
 import com.inventario.interfaces.gui.Cancelable;
+import com.inventario.util.GuiUtil;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -19,43 +20,44 @@ import javax.swing.UIManager;
  */
 public class AppDialog extends javax.swing.JDialog implements Cancelable {
 
-    public AppDialog(Frame parent, boolean modal) {
-        super(parent, modal);
-    }
+	public AppDialog(Frame parent, boolean modal) {
+		super(parent, modal);
+	}
 
-    public AppDialog(Dialog parent, boolean modal) {
-        super(parent, modal);
-    }
+	public AppDialog(Dialog parent, boolean modal) {
+		super(parent, modal);
+	}
 
-    public static void mostrar(Component padre, AppMensaje mensaje) {
-        AppDialog de;
-        Window mw = SwingUtilities.getWindowAncestor(padre);
-        if (mw instanceof Frame) {
-            de = new AppDialog((Frame) mw, true);
-        } else {
-            de = new AppDialog((Dialog) mw, true);
-        }
-        DialogKeyEventDistpatcher.dispatch(de);
-        de.initComponents();
-        de.setLocationRelativeTo(padre);
-        de.setMensaje(mensaje);
-        de.setVisible(true);
-    }
+	public static void mostrar(Component padre, AppMensaje mensaje) {
+		AppDialog de;
+		Window mw = SwingUtilities.getWindowAncestor(padre);
+		// Window mw = GuiUtil.getWindow(padre);
+		if (mw instanceof Frame) {
+			de = new AppDialog((Frame) mw, true);
+		} else {
+			de = new AppDialog((Dialog) mw, true);
+		}
+		DialogKeyEventDistpatcher.dispatch(de);
+		de.initComponents();
+		de.setLocationRelativeTo(mw);
+		de.setMensaje(mensaje);
+		de.setVisible(true);
+	}
 
-    @Override
-    public void cancel() {
-        this.dispose();
-    }
-    
-    private void setMensaje(AppMensaje mensaje) {
-        jspDetalles.setVisible(false);
-        jbDetalles.setVisible(false);
-        
-        jtpMensaje.setText(mensaje.getMensaje());
-        jtpMensaje.setCaretPosition(0);
-        
-        switch(mensaje.getTipo()) {
-            case JOptionPane.ERROR_MESSAGE:
+	@Override
+	public void cancel() {
+		this.dispose();
+	}
+
+	private void setMensaje(AppMensaje mensaje) {
+		jspDetalles.setVisible(false);
+		jbDetalles.setVisible(false);
+
+		jtpMensaje.setText(mensaje.getMensaje());
+		jtpMensaje.setCaretPosition(0);
+
+		switch (mensaje.getTipo()) {
+			case JOptionPane.ERROR_MESSAGE:
 				jlIcono.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
 				break;
 			case JOptionPane.INFORMATION_MESSAGE:
@@ -64,22 +66,22 @@ public class AppDialog extends javax.swing.JDialog implements Cancelable {
 			case JOptionPane.WARNING_MESSAGE:
 				jlIcono.setIcon(UIManager.getIcon("OptionPane.warningIcon"));
 				break;
-        }
-        
-        if (mensaje.getCausa() != null) {
-            // Hacer el boton de detalles visible
-            jbDetalles.setVisible(true);
-            
-            StringBuilder sb = new StringBuilder(255);
-            errorStack(sb, mensaje.getCausa());
-            jtpDetalles.setText(sb.toString());
-            
-            jtpDetalles.setCaretPosition(0);
-        }
-        jbCerrar.requestFocus();
-    }
+		}
 
-    private void errorStack(StringBuilder sb, Object obj) {
+		if (mensaje.getCausa() != null) {
+			// Hacer el boton de detalles visible
+			jbDetalles.setVisible(true);
+
+			StringBuilder sb = new StringBuilder(255);
+			errorStack(sb, mensaje.getCausa());
+			jtpDetalles.setText(sb.toString());
+
+			jtpDetalles.setCaretPosition(0);
+		}
+		jbCerrar.requestFocus();
+	}
+
+	private void errorStack(StringBuilder sb, Object obj) {
 		if (obj instanceof Throwable) {
 			Throwable t = (Throwable) obj;
 			sb.append(t.getClass().getCanonicalName()).append("\n");
@@ -92,9 +94,8 @@ public class AppDialog extends javax.swing.JDialog implements Cancelable {
 			sb.append("\n").append(obj);
 		}
 	}
-    
-    
-    @SuppressWarnings("unchecked")
+
+	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -173,12 +174,13 @@ public class AppDialog extends javax.swing.JDialog implements Cancelable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDetallesActionPerformed
-        jspDetalles.setVisible(!jspDetalles.isVisible());
-        this.validate(); // Para que se actualize la vista.
+		jspDetalles.setVisible(!jspDetalles.isVisible());
+		this.setSize(getSize().width, getSize().height + (jspDetalles.isVisible() ? 200 : -200));
+		this.validate(); // Para que se actualize la vista.
     }//GEN-LAST:event_jbDetallesActionPerformed
 
     private void jbCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCerrarActionPerformed
-        cancel(); // Jeje
+		cancel(); // Jeje
     }//GEN-LAST:event_jbCerrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

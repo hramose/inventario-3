@@ -2,6 +2,7 @@ package com.inventario.aplicacion.catalogos;
 
 import com.inventario.aplicacion.buscadores.BuscadorEmpleado;
 import com.inventario.aplicacion.buscadores.BuscadorTipo;
+import com.inventario.error.ErrorUtil;
 import com.inventario.error.InventarioException;
 import com.inventario.interfaces.Aplicacion;
 import com.inventario.interfaces.Editor;
@@ -87,6 +88,16 @@ public class EquipoEditor extends Editor<EquipoComputo> {
 
 	@Override
 	public EquipoComputo getItem() throws InventarioException {
+		// Unas validaciones
+		ErrorUtil err = new ErrorUtil();
+		err.siVacio(jtfSerie.getText(), "Falta ingresar la serie");
+		err.siVacio(jtfActivoFijo.getText(), "Falta ingresar el Activo Fijo");
+		err.siVacio(jtfMarca.getText(), "Falta ingresar la marca");
+		err.siVacio(jtfModelo.getText(), "Falta ingresar el modelo");
+		err.siNull(tipo, "Falta seleccionar el tipo");
+		err.siNull(jcbEstado.getSelectedItem(), "Falta seleccionar un estado");
+		err.notificar("Faltan datos");
+		
 		equipo.setSerie(jtfSerie.getText());
 		equipo.setActivoFijo(jtfActivoFijo.getText());
 		equipo.setMarca(jtfMarca.getText());
@@ -134,6 +145,7 @@ public class EquipoEditor extends Editor<EquipoComputo> {
 		jtfEmpleado.setText(null);
 		jcbEstado.setSelectedIndex(-1); // Sin valor
 		jtaDescripcion.setText(null);
+		
 		aeCaracteristicas.clear();
 		epeProgramas.clear(); // Ok, si quieres borrar todos, borralos manualmente :P
 	}

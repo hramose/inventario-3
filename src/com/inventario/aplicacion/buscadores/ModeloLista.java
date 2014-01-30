@@ -16,9 +16,13 @@ public class ModeloLista<T> extends AbstractListModel<T> {
 		items = new ArrayList<>(0);
 	}
 
-	public void setItems(List<T> items) {
-		this.items = items;
-		fireContentsChanged(this, 0, items.size());
+	public void setItems(List<T> lista) {
+		if (lista == null) {
+			items = new ArrayList<>(0);
+		} else {
+			items = lista;
+		}
+		fireContentsChanged(this, 0, items.size() - 1);
 	}
 
 	public List<T> getItems() {

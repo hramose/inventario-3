@@ -1,8 +1,10 @@
 package com.inventario.aplicacion.catalogos;
 
+import com.inventario.aplicacion.AppMensaje;
 import com.inventario.aplicacion.buscadores.BuscadorPrograma;
 import com.inventario.aplicacion.gui.*;
 import com.inventario.aplicacion.buscadores.ModeloLista;
+import com.inventario.error.InventarioException;
 import com.inventario.interfaces.Aplicacion;
 import com.inventario.listener.MonitorListener;
 import com.inventario.modelo.EquipoComputo;
@@ -10,6 +12,7 @@ import com.inventario.modelo.EquipoPrograma2;
 import com.inventario.util.Format;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.slf4j.Logger;
@@ -39,6 +42,7 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
 	private int estado = NONE;
 	private EquipoPrograma2 programa;
 	private MonitorListener monitor;
+	private boolean ajustando = false;
 
 	public EquipoProgramaEditor() {
 		initComponents();
@@ -52,6 +56,8 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
 		monitor = new MonitorListener();
 		monitor.listenTo(jtfPrograma);
 		monitor.listenTo(jcbSetFecha);
+		
+		monitor.addView(jlMonitor);
 	}
 
 	/**
@@ -79,8 +85,13 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
 
 	public void setEquipo(EquipoComputo equipo) {
 		this.equipo = equipo;
+		if (this.equipo.getProgramas() == null) {
+			this.equipo.setProgramas(new ArrayList<EquipoPrograma2>(0));
+		}
 		modelo.setItems(equipo.getProgramas());
 		setActivo(false);
+		limpiar();
+		monitor.setDirty(false);
 		anterior = -1; // Comenzar de nuevo la navegación
 	}
 
@@ -92,11 +103,16 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
 		jbQuitar.setEnabled(enabled);
 	}
 
-	private void guardarPrograma() {
+	
+	
+	private void guardarPrograma() throws InventarioException {
 		if (programa != null 
-				&& monitor.isDirty() 
-				&& programa != null) {
-			programa.setVigencia(jcbSetFecha.getDate());
+				&& monitor.isDirty()) {
+			// Validaciones
+			if (programa.getPrograma() == null) {
+				throw new InventarioException("Falta información del programa");
+			}
+			programa.setVigencia(jcbSetFecha.getDate()); // La vigencia es opcional
 			modelo.refresh(anterior);
 		}
 	}
@@ -109,14 +125,19 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
 	private void limpiar() {
 		jtfPrograma.setText(null);
 		jcbSetFecha.setDate(null);
+		monitor.setDirty(false);
 	}
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		if (!e.getValueIsAdjusting()) {
+		if (!e.getValueIsAdjusting() && !ajustando) {
 			index = jlProgramas.getSelectedIndex();
 			if (anterior != index) {
-				guardar();
+				try {
+					guardar();
+				} catch (InventarioException ex) {
+					new AppMensaje(ex).mostrar(this);
+				}
 			}
 			anterior = index;
 			if (index != -1) {
@@ -133,7 +154,8 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
 		}
 	}
 
-	private void guardar() {
+	private void guardar() throws InventarioException {
+		ajustando = true;
 		if (monitor.isDirty()) {
 			switch (estado) {
 				case DELETE: {
@@ -153,6 +175,7 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
 			}
 			monitor.setDirty(false);
 		}
+		ajustando = false;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -163,6 +186,7 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
         jlProgramas = new javax.swing.JList();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jlMonitor = new com.inventario.aplicacion.gui.JLabelMonitor();
         jbNuevo = new javax.swing.JButton();
         jbQuitar = new javax.swing.JButton();
         jbGuardar = new javax.swing.JButton();
@@ -187,6 +211,9 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
 
         jPanel2.setPreferredSize(new java.awt.Dimension(10, 40));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 5, 2));
+
+        jlMonitor.setPreferredSize(new java.awt.Dimension(120, 36));
+        jPanel2.add(jlMonitor);
 
         jbNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/inventario/iconos/add.png"))); // NOI18N
         jbNuevo.setPreferredSize(new java.awt.Dimension(40, 36));
@@ -303,7 +330,11 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
     }//GEN-LAST:event_jbQuitarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-		guardar();
+		try {
+			guardar();
+		} catch (InventarioException ex) {
+			new AppMensaje("No se ha podido guardar", ex).mostrar(this);
+		}
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbSetProgramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSetProgramaActionPerformed
@@ -325,6 +356,7 @@ public class EquipoProgramaEditor extends javax.swing.JPanel implements ListSele
     private javax.swing.JButton jbQuitar;
     private javax.swing.JButton jbSetPrograma;
     private com.inventario.gui.util.JCalendarButton jcbSetFecha;
+    private com.inventario.aplicacion.gui.JLabelMonitor jlMonitor;
     private javax.swing.JList jlProgramas;
     private javax.swing.JScrollPane jspLista;
     private javax.swing.JTextField jtfPrograma;

@@ -3,6 +3,7 @@ package com.inventario.modelo;
 import com.inventario.util.Format;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -78,5 +79,33 @@ public class EquipoPrograma2 implements Serializable {
 	public String toString() {
 		return String.format("%s (%s)", programa, Format.DATE.format(vigencia));
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 37 * hash + Objects.hashCode(this.equipo);
+		hash = 37 * hash + Objects.hashCode(this.programa);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final EquipoPrograma2 other = (EquipoPrograma2) obj;
+		if (!Objects.equals(this.equipo, other.equipo)) {
+			return false;
+		}
+		if (!Objects.equals(this.programa, other.programa)) {
+			return false;
+		}
+		return true;
+	}
+
+	
 
 }

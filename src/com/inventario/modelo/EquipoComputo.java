@@ -3,15 +3,17 @@ package com.inventario.modelo;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+// import org.hibernate.annotations.Cascade;
+// import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -49,8 +51,7 @@ public class EquipoComputo implements Serializable {
 	@Column
 	private String estado;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "id_equipo", referencedColumnName = "id")
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "equipo")
 	private List<EquipoPrograma2> programas;
 	// Esta contrucción parecía ser la correcta, pero supongo que es un problema de semántica de mi parte
 	// @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)

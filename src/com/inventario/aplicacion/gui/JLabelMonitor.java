@@ -11,6 +11,10 @@ import javax.swing.JLabel;
  */
 public class JLabelMonitor extends JLabel implements MonitorViewInterface {
 
+	public JLabelMonitor() {
+		super();
+	}
+	
     public JLabelMonitor(MonitorListener monitor) {
         super();
         // setBorder(BorderFactory.createLineBorder(Color.blue));

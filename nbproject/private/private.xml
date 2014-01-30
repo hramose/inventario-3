@@ -5,15 +5,6 @@
         <group name="RedPrepaid"/>
         <group name="Motum"/>
         <group name="Factura"/>
-        <group name="Otros">
-            <file>file:/home/jimmy/Documents/Development/zulma/Inventory2/src/hibernate.cfg.xml</file>
-            <file>file:/home/jimmy/Documents/Development/zulma/Inventory2/src/com/inventario/modelo/EquipoPrograma2.java</file>
-            <file>file:/home/jimmy/Documents/Development/zulma/Inventory2/src/com/inventario/modelo/EquipoComputo.java</file>
-            <file>file:/home/jimmy/Documents/Development/zulma/Inventory2/src/com/inventario/aplicacion/catalogos/EquipoProgramaEditor.java</file>
-            <file>file:/home/jimmy/Documents/Development/zulma/Inventory2/src/com/inventario/aplicacion/catalogos/EquipoEditor.java</file>
-            <file>file:/home/jimmy/Documents/Development/zulma/Inventory2/src/com/inventario/modelo/EquipoPrograma.java</file>
-            <file>file:/home/jimmy/Documents/Development/zulma/Inventory2/src/com/inventario/aplicacion/gui/AtributosEditor.java</file>
-            <file>file:/home/jimmy/Documents/Development/zulma/Inventory2/src/com/inventario/aplicacion/buscadores/ModeloLista.java</file>
-        </group>
+        <group name="Otros"/>
     </open-files>
 </project-private>
